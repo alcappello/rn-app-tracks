@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: tracks-mongo
+
+  express:
+    build:
+      context: .
+    container_name: tracks-api
+    depends_on:
+      - mongo
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    command: yarn start
+
+
+
