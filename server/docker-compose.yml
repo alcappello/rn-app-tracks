@@ -4,7 +4,9 @@ services:
   mongo:
     image: mongo:latest
     container_name: tracks-mongo
-
+    ports:
+      - 27017:27017
+    
   express:
     build:
       context: .

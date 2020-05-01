@@ -3,8 +3,8 @@ require('./models/Track');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const ngrok = require('ngrok');
 
-const requireAuth = require('./middlewares/requireAuth');
 const authRouter = require('./routes/authRoutes');
 const trackRouter = require('./routes/trackRoutes');
 
@@ -24,10 +24,8 @@ app.use(bodyParser.json());
 app.use(authRouter);
 app.use(trackRouter);
 
-app.get('/', requireAuth, (req, res) => {
-  res.send(`Your email is ${req.user.email}`);
-});
 
-app.listen(3000, () => {
-  console.log('Listening to 3000');
+app.listen(3000, async () => {
+  const url = await ngrok.connect(3000);
+  console.log(`Listening to 3000. External URL: ${url}`);
 });
